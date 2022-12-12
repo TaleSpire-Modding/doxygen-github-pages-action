@@ -13,12 +13,13 @@ on:
   push:
     branches:
       - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.0
+      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -42,13 +43,14 @@ on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.0
+      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
