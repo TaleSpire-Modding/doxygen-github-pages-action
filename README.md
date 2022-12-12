@@ -24,6 +24,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+In the Doxyfile you can include the following Paramaters:
+```
+- <ProjectName>
+- <Version>
+- <Description>
+```
+and they will be updated from the `manifest.json`'s properties `[Name,version_number,description]` respectively.
+
 ## Options
 
 - `github_token` (required): GitHub token for pushing to repo. See the [docs](https://git.io/passing-token) for more info.
@@ -79,17 +87,7 @@ sudo apt-get install doxygen -y
 
 Doxyfile is updated from manifest.json
 
-```pwsh
-$json = Get-Content "manifest.json" | ConvertFrom-Json
-$name = $json.name
-$version = $json.version_number
-$description = $json.description
-$doxyValue = (Get-Content Doxyfile) -Replace "<Version>", "$version"
-$doxyValue = $doxyValue -Replace "<ProjectName>", "$name"
-$doxyValue = $doxyValue -Replace "<Description>", "$description"
-Set-Content Doxyfile -Value $doxyValue
-echo $doxyValue
-```
+The [rgarcia-phi/json-to-variables](https://github.com/rgarcia-phi/json-to-variables) action is used to map manifest.json to environment variables and then [visiosto/replace-value](https://github.com/visiosto/replace-value) is used to map them to the Config File
 
 ### 4. Generate Doxygen Documentation
 
