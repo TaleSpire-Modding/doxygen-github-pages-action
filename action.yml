@@ -21,7 +21,11 @@ inputs:
     description: 'Path of the Doxygen configuration file'
     required: true
     default: "Doxyfile"
-
+  manifest_file:
+    description: 'Path of the Manifest file to inherit from'
+    required: true
+    default: "manifest.json"
+    
 runs:
   using: "composite"
   steps:
@@ -33,6 +37,19 @@ runs:
     - name: Install Doxygen
       run: sudo apt-get install doxygen graphviz -y
       shell: bash
+
+    - name: Update Doxyfile
+        shell: pwsh
+        run: |
+          $json = Get-Content "manifest.json" | ConvertFrom-Json
+          $name = $json.name
+          $version = $json.version_number
+          $description = $json.description
+          $doxyValue = (Get-Content Doxyfile) -Replace "<Version>", "$version"
+          $doxyValue = $doxyValue -Replace "<ProjectName>", "$name"
+          $doxyValue = $doxyValue -Replace "<Description>", "$description"
+          Set-Content Doxyfile -Value $doxyValue
+          echo $doxyValue
 
     - name: Generate Doxygen Documentation
       run: doxygen ${{ inputs.config_file }}
