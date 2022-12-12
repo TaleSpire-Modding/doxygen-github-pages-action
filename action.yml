@@ -39,8 +39,8 @@ runs:
       shell: bash
 
     - name: Update Doxyfile
-        shell: pwsh
-        run: |
+      shell: pwsh
+      run: |
           $json = Get-Content "manifest.json" | ConvertFrom-Json
           $name = $json.name
           $version = $json.version_number
