@@ -41,14 +41,14 @@ runs:
     - name: Update Doxyfile
       shell: bash
       run: |
-          $json = Get-Content ${{ inputs.manifest_file }} | ConvertFrom-Json
-          $name = $json.name
-          $version = $json.version_number
-          $description = $json.description
-          $doxyValue = (Get-Content ${{ inputs.config_file }}) -Replace "<Version>", "$version"
-          $doxyValue = $doxyValue -Replace "<ProjectName>", "$name"
-          $doxyValue = $doxyValue -Replace "<Description>", "$description"
-          Set-Content ${{ inputs.config_file }} -Value $doxyValue
+        $json = Get-Content ${{ inputs.manifest_file }} | ConvertFrom-Json
+        $name = $json.name
+        $version = $json.version_number
+        $description = $json.description
+        $doxyValue = (Get-Content ${{ inputs.config_file }}) -Replace "<Version>", "$version"
+        $doxyValue = $doxyValue -Replace "<ProjectName>", "$name"
+        $doxyValue = $doxyValue -Replace "<Description>", "$description"
+        Set-Content ${{ inputs.config_file }} -Value $doxyValue
 
     - name: Generate Doxygen Documentation
       run: doxygen ${{ inputs.config_file }}
