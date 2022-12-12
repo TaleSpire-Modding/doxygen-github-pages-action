@@ -39,7 +39,7 @@ runs:
       shell: bash
 
     - name: Update Doxyfile
-      shell: pwsh
+      shell: bash
       run: |
           $json = Get-Content ${{ inputs.manifest_file }} | ConvertFrom-Json
           $name = $json.name
