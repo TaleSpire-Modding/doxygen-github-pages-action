@@ -37,19 +37,35 @@ runs:
     - name: Install Doxygen
       run: sudo apt-get install doxygen graphviz -y
       shell: bash
+      
+    - name: JSON to variables
+      uses: rgarcia-phi/json-to-variables@v1.1.0
+      with:
+        filename: ${{ inputs.manifest_file }}
+        prefix: manifest
+        masked: true
+      
+    - name: Replace Version
+      uses: visiosto/replace-value@v1.2.1
+      with:
+        file: ${{ inputs.config_file }}
+        replaced: <Version>
+        value: ${{ env.manifest_version_number }}
 
-    - name: Update Doxyfile
-      shell: bash
-      run: |
-        $json = Get-Content ${{ inputs.manifest_file }} | ConvertFrom-Json
-        $name = $json.name
-        $version = $json.version_number
-        $description = $json.description
-        $doxyValue = (Get-Content ${{ inputs.config_file }}) -Replace "<Version>", "$version"
-        $doxyValue = $doxyValue -Replace "<ProjectName>", "$name"
-        $doxyValue = $doxyValue -Replace "<Description>", "$description"
-        Set-Content ${{ inputs.config_file }} -Value $doxyValue
-
+    - name: Replace Name
+      uses: visiosto/replace-value@v1.2.1
+      with:
+        file: ${{ inputs.config_file }}
+        replaced: <ProjectName>
+        value: ${{ env.manifest_name }}
+      
+    - name: Replace Brief
+      uses: visiosto/replace-value@v1.2.1
+      with:
+        file: ${{ inputs.config_file }}
+        replaced: <Description>
+        value: ${{ env.manifest_description }}
+      
     - name: Generate Doxygen Documentation
       run: doxygen ${{ inputs.config_file }}
       shell: bash
