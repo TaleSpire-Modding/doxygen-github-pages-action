@@ -78,15 +78,15 @@ sudo apt-get install doxygen -y
 Doxyfile is updated from manifest.json
 
 ```pwsh
-          $json = Get-Content "manifest.json" | ConvertFrom-Json
-          $name = $json.name
-          $version = $json.version_number
-          $description = $json.description
-          $doxyValue = (Get-Content Doxyfile) -Replace "<Version>", "$version"
-          $doxyValue = $doxyValue -Replace "<ProjectName>", "$name"
-          $doxyValue = $doxyValue -Replace "<Description>", "$description"
-          Set-Content Doxyfile -Value $doxyValue
-          echo $doxyValue
+$json = Get-Content "manifest.json" | ConvertFrom-Json
+$name = $json.name
+$version = $json.version_number
+$description = $json.description
+$doxyValue = (Get-Content Doxyfile) -Replace "<Version>", "$version"
+$doxyValue = $doxyValue -Replace "<ProjectName>", "$name"
+$doxyValue = $doxyValue -Replace "<Description>", "$description"
+Set-Content Doxyfile -Value $doxyValue
+echo $doxyValue
 ```
 
 ### 4. Generate Doxygen Documentation
