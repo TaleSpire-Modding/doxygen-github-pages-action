@@ -19,7 +19,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.2\3
+      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -58,7 +58,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.3
+      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
