@@ -27,7 +27,7 @@ inputs:
     default: "manifest.json"
   reamde_file:
     description: 'Path of the Manifest file to inherit from'
-    required: false
+    required: true
     default: "README.md"
     
 runs:
