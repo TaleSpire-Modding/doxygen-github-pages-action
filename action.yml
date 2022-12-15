@@ -26,9 +26,12 @@ inputs:
     required: true
     default: "manifest.json"
   readme_file:
-    description: 'Path of the Manifest file to inherit from'
+    description: 'Path of the Readme to include'
     required: true
     default: "README.md"
+  project_location:
+    description: 'Readme destination'
+    required: true
     
 runs:
   using: "composite"
@@ -68,20 +71,20 @@ runs:
       with:
         file: ${{ inputs.config_file }}
         replaced: <Description>
-        value: ${{ env.manifest_description }}
-      
+        value: ${{ env.manifest_description }}    
+        
     - name: Include README
       run: |
-        if (Test-Path docs) {
+        if (Test-Path ${{ inputs.project_location }}) {
           Write-Host "Folder Exists"
         }
         else {
-          New-Item docs -ItemType Directory
+          New-Item ${{ inputs.project_location }} -ItemType Directory
           Write-Host "Folder Created"
         }
         
         if (Test-Path ${{ inputs.readme_file }}) {
-          Copy-Item ${{ inputs.readme_file }} -Destination docs
+          Copy-Item ${{ inputs.readme_file }} -Destination ${{ inputs.project_location }}
         }
       shell: pwsh
       
@@ -92,7 +95,7 @@ runs:
     - name: Create .nojekyll (ensures pages with underscores work on gh pages)
       run: touch ${{ inputs.folder }}/.nojekyll
       shell: bash
-
+      
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
