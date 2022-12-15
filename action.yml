@@ -72,6 +72,14 @@ runs:
       
     - name: Include README
       run: |
+        if (Test-Path docs) {
+          Write-Host "Folder Exists"
+        }
+        else {
+          New-Item docs -ItemType Directory
+          Write-Host "Folder Created"
+        }
+        
         if (Test-Path ${{ inputs.readme_file }}) {
           Copy-Item ${{ inputs.readme_file }} -Destination docs
         }
