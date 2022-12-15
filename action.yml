@@ -25,6 +25,10 @@ inputs:
     description: 'Path of the Manifest file to inherit from'
     required: true
     default: "manifest.json"
+  reamde_file:
+    description: 'Path of the Manifest file to inherit from'
+    required: false
+    default: "README.md"
     
 runs:
   using: "composite"
@@ -65,6 +69,13 @@ runs:
         file: ${{ inputs.config_file }}
         replaced: <Description>
         value: ${{ env.manifest_description }}
+      
+    - name: Include README
+      run: |
+        if (Test-Path ${{ inputs.readme_file }}) {
+          Copy-Item ${{ inputs.readme_file }} -Destination docs
+        }
+      shell: pwsh
       
     - name: Generate Doxygen Documentation
       run: doxygen ${{ inputs.config_file }}
