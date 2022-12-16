@@ -19,9 +19,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.5
+      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          project_location: <Project Path>
 ```
 
 In the Doxyfile you can include the following Paramaters:
@@ -58,7 +59,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.5
+      - uses: TaleSpire-Modding/doxygen-github-pages-action@v1.2.6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
@@ -66,6 +67,7 @@ jobs:
           config_file: Doxyfile
           manifest_file: manifest.json
           readme_file: README.md
+          project_location: <Project Path>
 ```
 
 ## About this Action
